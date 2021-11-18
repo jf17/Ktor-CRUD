@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 val ktorVersion: String by project
 val kotlinVersion: String by project
 val logbackVersion: String by project
@@ -18,6 +20,7 @@ application {
 repositories {
     mavenLocal()
     maven { url = uri("https://kotlin.bintray.com/ktor") }
+    mavenCentral()
 }
 
 dependencies {
@@ -31,7 +34,13 @@ dependencies {
 
     testImplementation("io.ktor:ktor-server-tests:$ktorVersion")
 
-    implementation("org.jetbrains.exposed:exposed-core:$exposedVersion")
-    implementation("org.jetbrains.exposed:exposed-dao:$exposedVersion")
-    implementation("org.jetbrains.exposed:exposed-jdbc:$exposedVersion")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.6.0")
+}
+val compileKotlin: KotlinCompile by tasks
+compileKotlin.kotlinOptions {
+    jvmTarget = "1.8"
+}
+val compileTestKotlin: KotlinCompile by tasks
+compileTestKotlin.kotlinOptions {
+    jvmTarget = "1.8"
 }
